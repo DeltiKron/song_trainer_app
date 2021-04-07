@@ -3,26 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
-
-    <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.song_trainer.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+    app:startDestination="@id/startPageActivity">
+    <activity
+        android:id="@+id/startPageActivity"
+        android:name="com.example.song_trainer.StartPageActivity"
+        android:label="activity_start_page"
+        tools:layout="@layout/activity_start_page" >
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.song_trainer.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+            android:id="@+id/action_startPageActivity_to_songListActivity"
+            app:destination="@id/songListActivity" />
+    </activity>
+    <activity
+        android:id="@+id/addSongActivity"
+        android:name="com.example.song_trainer.AddSongActivity"
+        android:label="activity_add_song"
+        tools:layout="@layout/activity_add_song" />
+    <activity
+        android:id="@+id/songListActivity"
+        android:name="com.example.song_trainer.SongListActivity"
+        android:label="activity_song_list"
+        tools:layout="@layout/activity_song_list" >
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+            android:id="@+id/action_songListActivity_to_addSongActivity"
+            app:destination="@id/addSongActivity" />
+    </activity>
 </navigation>

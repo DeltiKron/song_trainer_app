@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Song_trainer">
         <activity
+            android:name=".AddSongActivity"
+            android:label="@string/title_activity_add_song"
+            android:theme="@style/Theme.Song_trainer.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".SongListActivity"
             android:label="@string/title_activity_song_list"
             android:theme="@style/Theme.Song_trainer.NoActionBar">
