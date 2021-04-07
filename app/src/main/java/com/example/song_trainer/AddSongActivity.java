@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class AddSongActivity extends AppCompatActivity {
 
@@ -19,7 +20,6 @@ public class AddSongActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        // TODO: add checks for empty fields, alert user
         // TODO: an edit-song activity would also be neat
         // TODO: check for redundancy
 
@@ -27,11 +27,21 @@ public class AddSongActivity extends AppCompatActivity {
             String title = ((EditText) findViewById(R.id.editTitle)).getText().toString();
             String artist = ((EditText) findViewById(R.id.editArtist)).getText().toString();
             String notes = ((EditText) findViewById(R.id.editNotes)).getText().toString();
-            Song song = new Song(title, artist, 0, 0, notes);
 
-            songDB.songDAO().insertSong(song);
-            this.finish();
+            if(title.isEmpty()){
+                Snackbar.make(view, "Missing Title!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+            else if(artist.isEmpty()){
+                Snackbar.make(view, "Missing Artist Name!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+            else {
+                Song song = new Song(title, artist, 0, 0, notes);
 
+                songDB.songDAO().insertSong(song);
+                this.finish();
+            }
         });
     }
 }
