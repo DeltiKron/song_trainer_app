@@ -25,28 +25,27 @@ public class SongListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button fab = findViewById(R.id.song_list_button);
-        fab.setOnClickListener(view -> {
-                Intent intent = new Intent(this, AddSongActivity.class);
-                Snackbar.make(view, "Add song was clicked!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                startActivity(intent);
-            });
+        FloatingActionButton add_song_button = findViewById(R.id.add_song_button);
+        add_song_button.setOnClickListener(view -> {
+                    Intent intent = new Intent(this, AddSongActivity.class);
+                    startActivity(intent);
+                }
+        );
 
-            // Lookup the recyclerview in activity layout
-            RecyclerView rvSongs = (RecyclerView) findViewById(R.id.rvSongs);
+        // Lookup the recyclerview in activity layout
+        RecyclerView rvSongs = (RecyclerView) findViewById(R.id.rvSongs);
 
-            // Generate Placeholder songs
-            // TODO: use songs from the database instead
-            List<Song> songs = Song.createSongsList(20);
-            // Create adapter passing in the sample user data
-            SongsAdapter adapter = new SongsAdapter(songs);
-            // Attach the adapter to the recyclerview to populate items
+        // Generate Placeholder songs
+        // TODO: use songs from the database instead
+        List<Song> songs = Song.createSongsList(20);
+        // Create adapter passing in the sample user data
+        SongsAdapter adapter = new SongsAdapter(songs);
+        // Attach the adapter to the recyclerview to populate items
         rvSongs.setAdapter(adapter);
-            // Set layout manager to position the items
+        // Set layout manager to position the items
         rvSongs.setLayoutManager(new
 
-            LinearLayoutManager(this));
-            // That's all!
-        }
+                LinearLayoutManager(this));
+        // That's all!
     }
+}
