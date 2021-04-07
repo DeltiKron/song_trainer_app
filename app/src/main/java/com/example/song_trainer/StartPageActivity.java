@@ -1,10 +1,10 @@
 package com.example.song_trainer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -24,16 +24,14 @@ public class StartPageActivity extends AppCompatActivity {
 
         add_song_button.setOnClickListener(
                 view -> {
-                    Intent intent = new Intent(this,ScrollingActivity.class);
-                    Snackbar.make(view, "Add song was clicked!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Intent intent = new Intent(this, AddSongActivity.class);
                     startActivity(intent);
                 }
         );
 
         song_list_button.setOnClickListener(
                 view -> {
-                    Intent intent = new Intent(this,SongListActivity.class);
+                    Intent intent = new Intent(this, SongListActivity.class);
                     Snackbar.make(view, "Add song was clicked!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     startActivity(intent);
@@ -41,5 +39,4 @@ public class StartPageActivity extends AppCompatActivity {
         );
     }
 
-    // TODO: POC for retrieval from DB using room: https://developer.android.com/training/data-storage/room
 }

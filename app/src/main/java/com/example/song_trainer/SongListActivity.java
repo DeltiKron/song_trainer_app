@@ -18,6 +18,25 @@ import java.util.List;
 
 public class SongListActivity extends AppCompatActivity {
 
+    private void update(){
+        // Lookup the recyclerview in activity layout
+        RecyclerView rvSongs = findViewById(R.id.rvSongs);
+
+        // Generate Placeholder songs
+        SongDatabase songDB = SongDatabase.getInstance(this);
+        List<Song> songs = songDB.songDAO().getSongList();
+
+        // Create adapter passing in the sample user data
+        SongsAdapter adapter = new SongsAdapter(songs);
+        // Attach the adapter to the recyclerview to populate items
+        rvSongs.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvSongs.setLayoutManager(new
+
+                LinearLayoutManager(this));
+        // That's all!
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,20 +51,18 @@ public class SongListActivity extends AppCompatActivity {
                 }
         );
 
-        // Lookup the recyclerview in activity layout
-        RecyclerView rvSongs = (RecyclerView) findViewById(R.id.rvSongs);
+        this.update();
+    }
 
-        // Generate Placeholder songs
-        // TODO: use songs from the database instead
-        List<Song> songs = Song.createSongsList(20);
-        // Create adapter passing in the sample user data
-        SongsAdapter adapter = new SongsAdapter(songs);
-        // Attach the adapter to the recyclerview to populate items
-        rvSongs.setAdapter(adapter);
-        // Set layout manager to position the items
-        rvSongs.setLayoutManager(new
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.update();
+    }
 
-                LinearLayoutManager(this));
-        // That's all!
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.update();
     }
 }

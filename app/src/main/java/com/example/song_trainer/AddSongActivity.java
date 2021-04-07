@@ -15,6 +15,7 @@ public class AddSongActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SongDatabase songDB = SongDatabase.getInstance(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_song);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -23,10 +24,20 @@ public class AddSongActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         // TODO: add checks for empty fields, alert user
         // TODO: an edit-song activity would also be neat
+        // TODO: check for redundancy
+
         fab.setOnClickListener(view -> {
             String title = ((EditText) findViewById(R.id.editTitle)).getText().toString();
-            Snackbar.make(view, "Sav button was clicked, title: " + title, Snackbar.LENGTH_LONG)
+            String artist = ((EditText) findViewById(R.id.editArtist)).getText().toString();
+            String notes = ((EditText) findViewById(R.id.editNotes)).getText().toString();
+            Song song = new Song(title,artist,0,0,notes);
+
+
+            songDB.songDAO().insertSong(song);
+            Snackbar.make(view, "Save button was clicked, added " + title + " to the database!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
+            this.finish();
+
         });
     }
 }

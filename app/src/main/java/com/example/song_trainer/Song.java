@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @Entity
 public class Song {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int songId;
     public String title;
     public String artist;
@@ -21,25 +21,24 @@ public class Song {
     @ColumnInfo(name = "notes")
     public String notes;
 
-    public Song(int songId, String title, String artist, int playCount, float skillLevel) {
-        this.songId = songId;
+    public Song( String title, String artist, int playCount, float skillLevel,String notes) {
         this.title = title;
         this.artist = artist;
         this.playCount = playCount;
         this.skillLevel = skillLevel;
-        this.notes = "";
+        this.notes = notes;
     }
 
-    public static ArrayList<Song> createSongsList(int numContacts) {
-        ArrayList<Song> songs = new ArrayList<Song>();
+    public ArrayList<Song> createPlaceholderSongsList(int numContacts) {
+        ArrayList<Song> songs = new ArrayList<>();
 
         for (int i = 1; i <= numContacts; i++) {
             songs.add(new Song(
-                    i+500,
                     "Hello",
                     "Lionel Richie",
                     0,
-                    (float) 0.
+                    (float) 0.,
+                    ""
             ));
         }
         return songs;
