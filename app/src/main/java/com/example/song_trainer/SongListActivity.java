@@ -1,5 +1,6 @@
 package com.example.song_trainer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.Button;
 
 import java.util.List;
 
@@ -23,27 +25,28 @@ public class SongListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        Button fab = findViewById(R.id.song_list_button);
+        fab.setOnClickListener(view -> {
+                Intent intent = new Intent(this, AddSongActivity.class);
+                Snackbar.make(view, "Add song was clicked!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            }
-        });
+                startActivity(intent);
+            });
 
-        // Lookup the recyclerview in activity layout
-        RecyclerView rvSongs = (RecyclerView) findViewById(R.id.rvSongs);
+            // Lookup the recyclerview in activity layout
+            RecyclerView rvSongs = (RecyclerView) findViewById(R.id.rvSongs);
 
-        // Generate Placeholder songs
-        // TODO: use songs from the database instead
-        List<Song> songs = Song.createSongsList(20);
-        // Create adapter passing in the sample user data
-        SongsAdapter adapter = new SongsAdapter(songs);
-        // Attach the adapter to the recyclerview to populate items
+            // Generate Placeholder songs
+            // TODO: use songs from the database instead
+            List<Song> songs = Song.createSongsList(20);
+            // Create adapter passing in the sample user data
+            SongsAdapter adapter = new SongsAdapter(songs);
+            // Attach the adapter to the recyclerview to populate items
         rvSongs.setAdapter(adapter);
-        // Set layout manager to position the items
-        rvSongs.setLayoutManager(new LinearLayoutManager(this));
-        // That's all!
+            // Set layout manager to position the items
+        rvSongs.setLayoutManager(new
+
+            LinearLayoutManager(this));
+            // That's all!
+        }
     }
-}
