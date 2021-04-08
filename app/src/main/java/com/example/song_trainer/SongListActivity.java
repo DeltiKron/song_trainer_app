@@ -11,28 +11,31 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.List;
 
-public class SongListActivity extends AppCompatActivity {
+public class SongListActivity extends AppCompatActivity implements SongsAdapter.onSongListener {
+    private static final String TAG = "SongListActivity";
+    private List<Song> mSongs;
 
-    private void update(){
+    private void update() {
         // Lookup the recyclerview in activity layout
         RecyclerView rvSongs = findViewById(R.id.rvSongs);
 
-        // Generate Placeholder songs
+        // Fetch list of songs
         SongDatabase songDB = SongDatabase.getInstance(this);
-        List<Song> songs = songDB.songDAO().getSongList();
+        mSongs = songDB.songDAO().getSongList();
 
         // Create adapter passing in the sample user data
-        SongsAdapter adapter = new SongsAdapter(songs);
+        SongsAdapter adapter = new SongsAdapter(mSongs,this);
         // Attach the adapter to the recyclerview to populate items
         rvSongs.setAdapter(adapter);
         // Set layout manager to position the items
         rvSongs.setLayoutManager(new
-
                 LinearLayoutManager(this));
         // That's all!
     }
@@ -64,5 +67,15 @@ public class SongListActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         this.update();
+    }
+
+    @Override
+    public void onSongClick(int position) {
+        Log.d(TAG,"onSongClick clicked at position "+String.format("%3d",position));
+        Song song = mSongs.get(position);
+        Toast.makeText(getApplicationContext(), song.title, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, PlaySongActivity.class);
+        intent.putExtra("song_object",song.songId);
+        this.startActivity(intent);
     }
 }

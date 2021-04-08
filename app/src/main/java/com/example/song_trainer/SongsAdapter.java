@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -15,12 +18,15 @@ import java.util.List;
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> {
 
+    private onSongListener onSongListener;
     private List<Song> mSongs;
+
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
 
-    public SongsAdapter(List<Song> songs) {
-        mSongs = songs;
+    public SongsAdapter(List<Song> songs, onSongListener onSongListener) {
+        this.mSongs = songs;
+        this.onSongListener = onSongListener;
     }
 
     @NonNull
@@ -30,10 +36,10 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.song_list_row, parent, false);
+        View songView = inflater.inflate(R.layout.song_list_row, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
+        ViewHolder viewHolder = new ViewHolder(songView, onSongListener);
         return viewHolder;
     }
 
@@ -44,7 +50,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
 
         // Set item views based on your views and data model
         TextView idTextView = holder.idTextView;
-        idTextView.setText(String.format("%03d",song.songId));
+        idTextView.setText(String.format("%03d", song.songId));
         TextView titleTextView = holder.titleTextView;
         titleTextView.setText(song.title);
         TextView artistTextView = holder.artistTextView;
@@ -53,6 +59,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         skillLevelTextView.setText(String.format("%.1f", song.skillLevel));
         TextView playCountTextView = holder.playCountTextView;
         playCountTextView.setText(String.format("%d", song.playCount));
+
     }
 
     @Override
@@ -60,7 +67,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         return mSongs.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView idTextView;
@@ -69,10 +76,12 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
         public TextView playCountTextView;
         public TextView skillLevelTextView;
 
+        private onSongListener onSongListener;
+
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, onSongListener onSongListener) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
@@ -81,6 +90,19 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder> 
             artistTextView = itemView.findViewById(R.id.tvArtist);
             playCountTextView = itemView.findViewById(R.id.tvPlayCount);
             skillLevelTextView = itemView.findViewById(R.id.tvSkillLevel);
+            this.onSongListener = onSongListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onSongListener.onSongClick(getAbsoluteAdapterPosition());
         }
     }
+
+    public interface onSongListener {
+        void onSongClick(int position);
+    }
+
 }
