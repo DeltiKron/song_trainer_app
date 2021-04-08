@@ -75,7 +75,7 @@ public class SongListActivity extends AppCompatActivity implements SongsAdapter.
         Song song = mSongs.get(position);
         Toast.makeText(getApplicationContext(), song.title, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, PlaySongActivity.class);
-        intent.putExtra("song_object",song.songId);
+        intent.putExtra("songId",song.songId);
         this.startActivity(intent);
     }
 }

@@ -12,6 +12,8 @@ import java.util.List;
 public interface SongDAO {
     @Query("select * from song")
     List<Song> getSongList();
+    @Query("SELECT * FROM song WHERE songId = :songId")
+    Song getSongById(int songId);
     @Insert
     void insertSong(Song song);
     @Update
