@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/tvId"
-        android:layout_width="wrap_content"
+        android:layout_width="40sp"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_weight=".06"
@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_weight=".375"
         android:layout_gravity="center_vertical"
+        android:gravity="start"
         android:orientation="vertical">
 
         <TextView
@@ -42,19 +43,19 @@
 
     <TextView
         android:id="@+id/tvPlayCount"
-        android:layout_width="wrap_content"
+        android:layout_width="50sp"
         android:layout_height="wrap_content"
-        android:layout_weight=".125"
         android:layout_gravity="center_vertical"
+        android:gravity="end"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvSkillLevel"
-        android:layout_width="wrap_content"
+        android:layout_width="50sp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_gravity="center_vertical"
-        android:layout_weight=".250"
+        android:gravity="end"
         />
 
 </LinearLayout>

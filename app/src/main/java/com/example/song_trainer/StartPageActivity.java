@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+import java.util.Random;
+
 public class StartPageActivity extends AppCompatActivity {
     Button add_song_button;
     Button random_song_button;
@@ -21,6 +24,17 @@ public class StartPageActivity extends AppCompatActivity {
         add_song_button = findViewById(R.id.add_song_button);
         random_song_button = findViewById(R.id.random_song_button);
         song_list_button = findViewById(R.id.song_list_button);
+
+        random_song_button.setOnClickListener(view -> {
+            SongDatabase db = SongDatabase.getInstance(this);
+            List<Song> songs = db.songDAO().getSongList();
+            Random rand = new Random();
+            int index = songs.get(rand.nextInt(songs.size())).songId;
+
+            Intent intent = new Intent(this, PlaySongActivity.class);
+            intent.putExtra("songId", index);
+            this.startActivity(intent);
+        });
 
         add_song_button.setOnClickListener(
                 view -> {
