@@ -17,6 +17,7 @@
     <style name="Theme.Song_trainer.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="background">@color/white</item>
     </style>
 
     <style name="Theme.Song_trainer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

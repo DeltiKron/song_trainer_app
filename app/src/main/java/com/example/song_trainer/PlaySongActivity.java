@@ -1,13 +1,21 @@
 package com.example.song_trainer;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class PlaySongActivity extends AppCompatActivity {
 
@@ -16,17 +24,25 @@ public class PlaySongActivity extends AppCompatActivity {
     private TextView playCountText;
     private TextView ratingText;
     private Song mSong;
-
+    SongDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_song);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        if (ab != null){ab.setDisplayHomeAsUpEnabled(true);}
+
 
         RatingBar skillBar = findViewById(R.id.ratingBar);
 
         int songId = getIntent().getIntExtra("songId", 0);
-        SongDatabase db = SongDatabase.getInstance(this);
+        db = SongDatabase.getInstance(this);
         mSong = db.songDAO().getSongById(songId);
 
 
@@ -70,4 +86,49 @@ public class PlaySongActivity extends AppCompatActivity {
             this.finish();
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+
+            case R.id.action_add:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
+
+            case R.id.action_delete:
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete Song")
+                        .setMessage("Do you really want to delete this song entry?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                            db.songDAO().deleteSong(mSong);
+                            finish();
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+
+                return true;
+
+            case android.R.id.home:
+                // replace up button with back button
+                onBackPressed();
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
 }

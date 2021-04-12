@@ -8,11 +8,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Song_trainer">
-
+        android:theme="@style/Theme.Song_trainer.NoActionBar">
         <activity
             android:name=".PlaySongActivity"
-            android:label="@string/title_activity_play_song">
+            android:label="@string/title_activity_play_song"
+            android:theme="@style/Theme.Song_trainer.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
