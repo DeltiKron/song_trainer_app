@@ -14,4 +14,10 @@
     <string name="add_song_button_text">Add Song</string>
     <string name="save_button_content_Description">Save Button</string>
     <string name="action_favorite">Favorite</string>
+    <string name="title_activity_edit_song">Edit Entry</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.example.song_trainer;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,14 +8,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 public class PlaySongActivity extends AppCompatActivity {
 
@@ -36,7 +34,9 @@ public class PlaySongActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
 
         // Enable the Up button
-        if (ab != null){ab.setDisplayHomeAsUpEnabled(true);}
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
 
         RatingBar skillBar = findViewById(R.id.ratingBar);
@@ -53,8 +53,8 @@ public class PlaySongActivity extends AppCompatActivity {
 
         titleText.setText(mSong.title);
         artistText.setText(mSong.artist);
-        playCountText.setText(String.format(java.util.Locale.US,"%3d", mSong.playCount));
-        String ratingString = "Rating: " + String.format(java.util.Locale.US,"%3.1f", mSong.skillLevel);
+        playCountText.setText(String.format(java.util.Locale.US, "%3d", mSong.playCount));
+        String ratingString = "Rating: " + String.format(java.util.Locale.US, "%3.1f", mSong.skillLevel);
         ratingText.setText(ratingString);
 
         skillBar.setNumStars(5);
@@ -101,9 +101,11 @@ public class PlaySongActivity extends AppCompatActivity {
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
 
-            case R.id.action_add:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+
+            case R.id.action_edit:
+                Intent intent = new Intent(this, EditSongActivity.class);
+                intent.putExtra("songId", mSong.songId);
+                startActivity(intent);
                 return true;
 
             case R.id.action_delete:
