@@ -7,6 +7,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -23,6 +27,16 @@ public class Song {
     public float skillLevel;
     @ColumnInfo(name = "notes")
     public String notes;
+
+
+    public static Song from_json(JSONObject jsonObject) throws JSONException {
+        String title = jsonObject.getString("title");
+        String artist = jsonObject.getString("artist");
+        String notes = jsonObject.getString("notes");
+        int playCount = jsonObject.getInt("play_count");
+        int skillLevel = jsonObject.getInt("skill_level");
+        return new Song(title,artist,playCount,skillLevel,notes);
+    }
 
     public Song( String title, String artist, int playCount, float skillLevel,String notes) {
         this.title = title;

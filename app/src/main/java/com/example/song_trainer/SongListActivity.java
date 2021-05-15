@@ -3,6 +3,11 @@ package com.example.song_trainer;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -16,7 +21,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
+
+import static com.android.volley.toolbox.Volley.newRequestQueue;
 
 public class SongListActivity extends AppCompatActivity implements SongsAdapter.onSongListener {
     private static final String TAG = "SongListActivity";
@@ -38,6 +49,8 @@ public class SongListActivity extends AppCompatActivity implements SongsAdapter.
         rvSongs.setLayoutManager(new
                 LinearLayoutManager(this));
         // That's all!
+
+        this.importSongsFromJSON("http://192.168.2.101:5000/songs/export_songs",songDB);
     }
 
     @Override
@@ -78,4 +91,44 @@ public class SongListActivity extends AppCompatActivity implements SongsAdapter.
         intent.putExtra("songId",song.songId);
         this.startActivity(intent);
     }
+
+    public void importSongsFromJSON(String url,SongDatabase db){
+        // Instantiate the RequestQueue.
+        RequestQueue queue = newRequestQueue(this);
+
+// Request a string response from the provided URL.
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
+                response -> {
+                    try {
+
+                        Log.d("JsonArray", response.toString());
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject entry = response.getJSONObject(i);
+                            Song song =  Song.from_json(entry);
+                            Log.d("title", song.title);
+                            boolean exists = db.songDAO().songExists(song.title, song.artist);
+                            Log.d("exists", String.valueOf(exists));
+                            if (!exists){
+                                db.songDAO().insertSong(song);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+/*
+                        try {
+                            entry = response.getJSONObject(i);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("JSONEntry", entry.toString());
+*/
+
+                }, error -> System.out.println("That didn't work!"));
+
+// Add the request to the RequestQueue.
+        queue.add(jsonArrayRequest);
+    }
+
 }

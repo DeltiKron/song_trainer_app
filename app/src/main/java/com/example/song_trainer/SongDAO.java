@@ -20,4 +20,6 @@ public interface SongDAO {
     void updateSong(Song song);
     @Delete
     void deleteSong(Song song);
+    @Query("SELECT count(*) FROM song where title= :title and artist= :artist")
+    boolean songExists(String title, String artist);
 }
