@@ -1,5 +1,7 @@
 package com.example.song_trainer;
 
+import static android.os.Build.VERSION_CODES.R;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -15,6 +17,8 @@ public class StartPageActivity extends AppCompatActivity {
     Button add_song_button;
     Button random_song_button;
     Button song_list_button;
+    Button practice_list_button;
+    Button practice_song_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,8 @@ public class StartPageActivity extends AppCompatActivity {
         add_song_button = findViewById(R.id.add_song_button);
         random_song_button = findViewById(R.id.random_song_button);
         song_list_button = findViewById(R.id.song_list_button);
+        practice_list_button = findViewById(R.id.practice_list_button);
+        practice_song_button = findViewById(R.id.practice_song_button);
 
         random_song_button.setOnClickListener(view -> {
             SongDatabase db = SongDatabase.getInstance(this);
@@ -51,6 +57,23 @@ public class StartPageActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
         );
+        practice_list_button.setOnClickListener(
+                view -> {
+                    Intent intent = new Intent(this, SongListActivity.class);
+                    intent.putExtra("practice_mode",true);
+                    Snackbar.make(view, "Add song was clicked!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    startActivity(intent);
+                }
+        );
+
+        practice_song_button.setOnClickListener(view -> {
+            Intent intent = new Intent(this, PlaySongActivity.class);
+            intent.putExtra("practice_mode", true);
+            this.startActivity(intent);
+        });
+
+
     }
 
 }

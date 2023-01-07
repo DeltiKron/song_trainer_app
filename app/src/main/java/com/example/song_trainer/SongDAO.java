@@ -22,4 +22,8 @@ public interface SongDAO {
     void deleteSong(Song song);
     @Query("SELECT count(*) FROM song where title= :title and artist= :artist")
     boolean songExists(String title, String artist);
+    @Query("SELECT *, 1./(play_count+1)+1./(skill_level+1) as score from song order by score desc")
+    List<Song> getSongsByPracticeScore();
+
+
 }

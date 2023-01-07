@@ -15,6 +15,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 public class PlaySongActivity extends AppCompatActivity {
 
     private TextView titleText;
@@ -44,6 +46,14 @@ public class PlaySongActivity extends AppCompatActivity {
         int songId = getIntent().getIntExtra("songId", 0);
         db = SongDatabase.getInstance(this);
         mSong = db.songDAO().getSongById(songId);
+
+        boolean practiceMode = getIntent().getBooleanExtra("practice_mode", false);
+        if(practiceMode){
+            List<Song> songs = db.songDAO().getSongsByPracticeScore();
+            WeightedRandomBag bag = new WeightedRandomBag<Song>();
+            for (Song s:songs){bag.addEntry(s, s.practiceScore());}
+            mSong = (Song) bag.getRandom();
+        }
 
 
         titleText = findViewById(R.id.tvTitle);

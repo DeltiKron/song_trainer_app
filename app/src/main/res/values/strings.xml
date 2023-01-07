@@ -10,7 +10,9 @@
     <string name="add_a_song_button_helptext">Button to add a Song</string>
     <string name="title_activity_play_song">Play Song</string>
     <string name="random_song_button_text">Random Song</string>
+    <string name="practice_song_button_text">Practice a Song</string>
     <string name="song_list_button_text">Song List</string>
+    <string name="practice_list_button_text">Practice List</string>
     <string name="add_song_button_text">Add Song</string>
     <string name="save_button_content_Description">Save Button</string>
     <string name="action_favorite">Favorite</string>

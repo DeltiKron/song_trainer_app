@@ -32,14 +32,15 @@ import static com.android.volley.toolbox.Volley.newRequestQueue;
 public class SongListActivity extends AppCompatActivity implements SongsAdapter.onSongListener {
     private static final String TAG = "SongListActivity";
     private List<Song> mSongs;
-
+    boolean startedInPracticeMode = false;
     private void update() {
         // Lookup the recyclerview in activity layout
         RecyclerView rvSongs = findViewById(R.id.rvSongs);
 
         // Fetch list of songs
         SongDatabase songDB = SongDatabase.getInstance(this);
-        mSongs = songDB.songDAO().getSongList();
+        mSongs = this.startedInPracticeMode ? songDB.songDAO().getSongsByPracticeScore() : songDB.songDAO().getSongList();
+
 
         // Create adapter passing in the sample user data
         SongsAdapter adapter = new SongsAdapter(mSongs,this);
@@ -66,6 +67,10 @@ public class SongListActivity extends AppCompatActivity implements SongsAdapter.
                     startActivity(intent);
                 }
         );
+
+        Intent myIntent = getIntent(); // gets the previously created intent
+        this.startedInPracticeMode = myIntent.getBooleanExtra("practice_mode",false);
+
 
         this.update();
     }
