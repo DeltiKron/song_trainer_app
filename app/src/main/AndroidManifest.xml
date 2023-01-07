@@ -13,6 +13,7 @@
         android:theme="@style/Theme.Song_trainer.NoActionBar">
         <activity
             android:name=".EditSongActivity"
+            android:exported="true"
             android:label="@string/title_activity_edit_song">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +23,7 @@
         </activity>
         <activity
             android:name=".PlaySongActivity"
+            android:exported="true"
             android:label="@string/title_activity_play_song"
             android:theme="@style/Theme.Song_trainer.NoActionBar">
             <intent-filter>
@@ -32,6 +34,7 @@
         </activity>
         <activity
             android:name=".AddSongActivity"
+            android:exported="true"
             android:label="@string/title_activity_add_song"
             android:theme="@style/Theme.Song_trainer.NoActionBar">
             <intent-filter>
@@ -42,6 +45,7 @@
         </activity>
         <activity
             android:name=".SongListActivity"
+            android:exported="true"
             android:label="@string/title_activity_song_list"
             android:theme="@style/Theme.Song_trainer.NoActionBar">
             <intent-filter>
@@ -50,7 +54,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartPageActivity">
+        <activity
+            android:name=".StartPageActivity"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

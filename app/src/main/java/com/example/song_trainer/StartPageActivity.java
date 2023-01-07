@@ -1,7 +1,5 @@
 package com.example.song_trainer;
 
-import static android.os.Build.VERSION_CODES.R;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
