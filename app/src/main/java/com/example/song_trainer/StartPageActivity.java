@@ -32,6 +32,13 @@ public class StartPageActivity extends AppCompatActivity {
         random_song_button.setOnClickListener(view -> {
             SongDatabase db = SongDatabase.getInstance(this);
             List<Song> songs = db.songDAO().getSongList();
+
+            if(songs.size()==0){
+                Snackbar.make(view, "No songs in database!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            }
+
             Random rand = new Random();
             int index = songs.get(rand.nextInt(songs.size())).songId;
 

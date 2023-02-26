@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RoomWarnings;
 import androidx.room.Update;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface SongDAO {
     void deleteSong(Song song);
     @Query("SELECT count(*) FROM song where title= :title and artist= :artist")
     boolean songExists(String title, String artist);
+
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT *, 1./(play_count+1)+1./(skill_level+1) as score from song order by score desc")
     List<Song> getSongsByPracticeScore();
 

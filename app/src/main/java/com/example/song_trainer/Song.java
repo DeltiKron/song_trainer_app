@@ -21,7 +21,7 @@ public class Song {
     public int playCount;
     @ColumnInfo(name = "skill_level")
     public float skillLevel;
-    @ColumnInfo(name = "notes")
+    @ColumnInfo(name = "notes")//, defaultValue = "")
     public String notes;
 
 

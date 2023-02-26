@@ -48,9 +48,10 @@ public class EditSongActivity extends AppCompatActivity {
 
         titleText.setText(mSong.title);
         artistText.setText(mSong.artist);
+        notesText.setText(utility.cleanNotes(mSong.notes));
         playCountText.setText(String.format(java.util.Locale.US, "%3d", mSong.playCount));
         skillBar.setNumStars(5);
-        skillBar.setRating((float) 2.5);
+        skillBar.setRating( mSong.skillLevel);
 
         // Add callback to save song on click
         FloatingActionButton button = findViewById(R.id.save_song_button);
@@ -64,7 +65,7 @@ public class EditSongActivity extends AppCompatActivity {
             int play_count = Integer.parseInt(playCountText.getText().toString().trim());
             String notes = notesText.getText().toString();
 
-            mSong.notes = notes;
+            mSong.notes = utility.cleanNotes(notes);
             mSong.artist = new_artist;
             mSong.skillLevel = new_rating;
             mSong.title = new_title;
